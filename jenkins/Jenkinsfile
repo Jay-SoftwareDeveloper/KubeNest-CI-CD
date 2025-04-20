@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone Repo') {
+            steps { git 'https://github.com/your-username/k8s-cicd-pipeline.git' }
+        }
+        stage('Build Docker Image') {
+            steps { sh 'docker build -t your-dockerhub-user/flask-app:latest app/' }
+        }
+        stage('Push to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                    sh 'docker push your-dockerhub-user/flask-app:latest'
+                }
+            }
+        }
+        stage('Deploy with Helm') {
+            steps {
+                sh 'helm upgrade --install flask-app helm/microservice-chart/ --namespace dev'
+            }
+        }
+    }
+}

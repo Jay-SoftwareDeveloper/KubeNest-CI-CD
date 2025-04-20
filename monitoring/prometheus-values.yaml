@@ -1,0 +1,9 @@
+alertmanager:
+  enabled: true
+server:
+  global:
+    scrape_interval: 15s
+  extraScrapeConfigs:
+    - job_name: 'flask-app'
+      static_configs:
+        - targets: ['flask-service.dev.svc.cluster.local:5000']
