@@ -77,9 +77,3 @@ Access Jenkins and configure credentials (`dockerhub-creds`) for Docker authenti
 helm install prometheus prometheus-community/prometheus -f monitoring/prometheus-values.yaml --namespace dev
 helm install grafana grafana/grafana -f monitoring/grafana-values.yaml --namespace dev
 ```
----
-### Credentials
-AWS, DockerHub, and Jenkins credentials are **NOT included**. 
----
-### Contact
-Created by Jayanth Manthrigalla. For questions or feedback, reach out via GitHub.
